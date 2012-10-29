@@ -90,17 +90,7 @@ class Belvg_Halloween_Block_Halloween extends Mage_Core_Block_Template
     {
         return $this->_getHelper()->getPosition();
     }
-
-    /**
-     * Get block title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->_getHelper()->getTitle();
-    }
-
+    
     /**
      * Retrieve loaded product collection
      *
@@ -132,6 +122,26 @@ class Belvg_Halloween_Block_Halloween extends Mage_Core_Block_Template
         }
 
         return $this->_productCollection;
+    }
+
+    /**
+     * Check if block is allowed to show
+     *
+     * @return boolean
+     */
+    public function isAllowed()
+    {
+        return $this->_getHelper()->isAllowed();
+    }
+
+    /**
+     * Get cooke nme for disabling block output
+     *
+     * @retur string;
+     */
+    public function getCookieName()
+    {
+        return $this->_getHelper()->getCookieName();
     }
 
 }

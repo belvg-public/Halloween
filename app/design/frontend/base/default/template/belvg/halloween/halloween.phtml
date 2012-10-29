@@ -35,30 +35,43 @@
 /* Pomotion products list */
 /* @var $this Belvg_Halloween_Block_Halloween */
 ?>
+<?php $_product_collection = $this->getLoadedProductCollection(); ?>
+<?php if($this->isAllowed() && $_product_collection->count() ): ?>
+	<div class="halloween-wrapper halloween-<?php echo $this->getPosition() ?>" style="display:none;" id="halloween_wrapper">
+		<div class="halloween-header">
+            <a class="halloween-close" href="#" onclick="$('halloween_wrapper').hide();document.cookie = 'halloween-adv=1; expires=3-Nov-<?php echo date('Y')?>  00:00:00 GMT; path=/';return false;" title="<?php echo $this->__('Close') ?>"><span><?php echo $this->__('Close') ?></span></a>
+			<div class="halloween-highlight"></div>
+		</div>
+		<div class="halloween-content">
+			<table class="halloween-products">
+				<?php foreach( $_product_collection as $_product ): ?>
+					<tr>
+						<td>
+							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="product-image">
+								<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(44); ?>" width="44" height="44" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+							</a>
+						</td>
+						<td>
+							<h2 class="product-name">
+								<a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a>
+							</h2>
+						</td>
+					</tr>
+				<?php endforeach ?>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var halloween  = $('halloween_wrapper'),
+			hallHeight = halloween.getDimensions().height,
+			winHeight  = document.viewport.getDimensions().height;
 
-<?php
-$_product_collection = $this->getLoadedProductCollection();
-?>
-<?php if ($_product_collection->count()): ?>
-    <div class="halloween-contaier halloween-<?php echo $this->getPosition() ?>" style="display:none">
-        <img src="<?php echo $this->getSkinUrl('images/belvg/halloween/bat.png') ?>" />
-        <div class="block halloween-box">
-            <div class="block-title"><?php echo $this->escapeHtml($this->getTitle()) ?></div>
-            <ul class="block-content">
-                <?php foreach ($_product_collection as $_product): ?>
-                    <li>
-                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(98); ?>" width="98" height="98" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" /></a>
-                        <div><a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a></div>
-                    </li>
-                <?php endforeach ?>
-            </ul>
-        </div>
-    </div>
+		Event.observe( window, 'load', function() {
+			halloween.appear({ duration: 4.0 });
+		});
 
-    <script type="text/javascript">
-        Event.observe(window, 'load', function() {
-            $$('.halloween-contaier')[0].appear({ duration: 3.0 });
-        });
-    </script>
-    <?php
- endif ?>
+		if( winHeight < hallHeight ){
+			halloween.addClassName('halloween-wrapper-static');
+		}
+	</script>
+<?php endif; ?>

@@ -37,14 +37,15 @@
 class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
+     * is block active
+     */
+
+    const XML_PATH_HALLOWEEN_ENABLED = 'halloween/settings/enabled';
+
+    /**
      * Block position
      */
     const XML_PATH_HALLOWEEN_POSITION = 'halloween/settings/position';
-
-    /**
-     * Block title
-     */
-    const XML_PATH_HALLOWEEN_TITLE = 'halloween/settings/title';
 
     /**
      * List of selected SKUs
@@ -55,6 +56,11 @@ class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
      * Module cache tag
      */
     const CACHE_TAG = 'belvg_halloween';
+
+    /**
+     * cookie for disabling block output
+     */
+    const COOKIE_NAME = 'halloween-adv';
 
     /**
      * Separator for the selected SKUs
@@ -72,17 +78,6 @@ class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
     public function getPosition($store = '')
     {
         return Mage::getStoreConfig(self::XML_PATH_HALLOWEEN_POSITION, $store);
-    }
-
-    /**
-     * Get block title
-     *
-     * @param mixed $store
-     * @return string
-     */
-    public function getTitle($store = '')
-    {
-        return Mage::getStoreConfig(self::XML_PATH_HALLOWEEN_TITLE, $store);
     }
 
     /**
@@ -124,4 +119,29 @@ class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
         return self::CACHE_TAG;
     }
 
+    /**
+     * Check if block is allowed to show
+     *
+     * @param mixed $store
+     * @return boolean
+     */
+    public function isAllowed($store = '')
+    {
+        if (!Mage::getStoreConfigFlag(self::XML_PATH_HALLOWEEN_ENABLED, $store) ||
+                Mage::getModel('core/cookie')->get($this->getCookieName())) {
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
+    /**
+     * Get cooke nme for disabling block output
+     *
+     * @retur string;
+     */
+    public function getCookieName()
+    {
+        return self::COOKIE_NAME;
+    }
 }
