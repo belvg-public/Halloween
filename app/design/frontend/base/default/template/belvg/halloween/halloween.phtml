@@ -24,9 +24,9 @@
  * versions in the future.
  * ****************************************************
  * @category   Belvg
- * @package    Belvg_Hhalloween
+ * @package    Belvg_Halloween
  * @author Pavel Novitsky <pavel@belvg.com>
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2013 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 ?>
@@ -35,43 +35,46 @@
 /* Pomotion products list */
 /* @var $this Belvg_Halloween_Block_Halloween */
 ?>
+
 <?php $_product_collection = $this->getLoadedProductCollection(); ?>
 <?php if($this->isAllowed() && $_product_collection->count() ): ?>
-	<div class="halloween-wrapper halloween-<?php echo $this->getPosition() ?>" style="display:none;" id="halloween_wrapper">
-		<div class="halloween-header">
-            <a class="halloween-close" href="#" onclick="$('halloween_wrapper').hide();document.cookie = 'halloween-adv=1; expires=3-Nov-<?php echo date('Y')?>  00:00:00 GMT; path=/';return false;" title="<?php echo $this->__('Close') ?>"><span><?php echo $this->__('Close') ?></span></a>
-			<div class="halloween-highlight"></div>
-		</div>
-		<div class="halloween-content">
-			<table class="halloween-products">
-				<?php foreach( $_product_collection as $_product ): ?>
-					<tr>
-						<td>
-							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="product-image">
-								<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(44); ?>" width="44" height="44" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
-							</a>
-						</td>
-						<td>
-							<h2 class="product-name">
-								<a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a>
-							</h2>
-						</td>
-					</tr>
-				<?php endforeach ?>
-			</table>
-		</div>
-	</div>
-	<script type="text/javascript">
-		var halloween  = $('halloween_wrapper'),
-			hallHeight = halloween.getDimensions().height,
-			winHeight  = document.viewport.getDimensions().height;
+<div class="belvg-promo-wrapper belvg-promo-position-<?php echo $this->getPosition()?> belvg-promo-theme-<?php echo $this->getEventType()?>">
+    <a title="Close" href="#" class="belvg-promo-close" onclick="$$('.belvg-promo-wrapper')[0].hide();document.cookie='promo-adv=1;expires=<?php echo $this->getExpires()?>;path=/';return false;"><span>Close</span></a>
+	<table class="belvg-promo-products">
+        <?php foreach( $_product_collection as $_product ): ?>
+		<tr>
+			<td>
+				<a class="product-image" title="<?php echo $this->escapeHtml($_product->getName()) ?>" href="<?php echo $_product->getProductUrl() ?>">
+					<img width="60" height="60" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(60); ?>">
+				</a>
+			</td>
+			<td>
+				<h2 class="product-name">
+					<a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a>
+				</h2>
+				<div class="price-box">
+					<span class="regular-price"><span class="price"><?php echo Mage::helper('core')->currency($_product->getFinalPrice());?></span></span>
+				</div>
+			</td>
+		</tr>
+        <?php endforeach?>
+	</table>
+</div>
+<script>
+	var belvgPromo  = $$('.belvg-promo-wrapper')[0],
+		blockHeight = belvgPromo.getDimensions().height,
+		winHeight   = document.viewport.getDimensions().height;
 
-		Event.observe( window, 'load', function() {
-			halloween.appear({ duration: 4.0 });
+	Event.observe( window, 'load', function(){
+		belvgPromo.appear({
+			duration : 4.0
 		});
+	});
 
-		if( winHeight < hallHeight ){
-			halloween.addClassName('halloween-wrapper-static');
-		}
-	</script>
+	if( winHeight < blockHeight ){
+		belvgPromo.setStyle({
+			'position' : 'absolute'
+		});
+	}
+</script>
 <?php endif; ?>

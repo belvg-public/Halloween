@@ -25,9 +25,9 @@
  * versions in the future.
  * ****************************************************
  * @category   Belvg
- * @package    Belvg_Hhalloween
+ * @package    Belvg_Halloween
  * @author Pavel Novitsky <pavel@belvg.com>
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2013 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 
@@ -36,16 +36,21 @@
  */
 class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
 {
+
     /**
      * is block active
      */
-
     const XML_PATH_HALLOWEEN_ENABLED = 'halloween/settings/enabled';
 
     /**
      * Block position
      */
     const XML_PATH_HALLOWEEN_POSITION = 'halloween/settings/position';
+
+    /**
+     * Block event type
+     */
+    const XML_PATH_HALLOWEEN_EVENT = 'halloween/settings/event';
 
     /**
      * List of selected SKUs
@@ -60,7 +65,7 @@ class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * cookie for disabling block output
      */
-    const COOKIE_NAME = 'halloween-adv';
+    const COOKIE_NAME = 'promo-adv';
 
     /**
      * Separator for the selected SKUs
@@ -78,6 +83,17 @@ class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
     public function getPosition($store = '')
     {
         return Mage::getStoreConfig(self::XML_PATH_HALLOWEEN_POSITION, $store);
+    }
+
+    /**
+     * Block event type
+     *
+     * @param mixed $store
+     * @return string
+     */
+    public function getEventType($store = '')
+    {
+        return Mage::getStoreConfig(self::XML_PATH_HALLOWEEN_EVENT, $store);
     }
 
     /**
@@ -144,4 +160,15 @@ class Belvg_Halloween_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return self::COOKIE_NAME;
     }
+
+    /**
+     * Return expiry date of the cookie for hiding banner
+     *
+     * @return string
+     */
+    public function getExpires()
+    {
+        return date('r', strtotime('+2 days'));
+    }
+
 }

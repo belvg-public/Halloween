@@ -25,9 +25,9 @@
  * versions in the future.
  * ****************************************************
  * @category   Belvg
- * @package    Belvg_Hhalloween
+ * @package    Belvg_Halloween
  * @author Pavel Novitsky <pavel@belvg.com>
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2013 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 
@@ -90,7 +90,17 @@ class Belvg_Halloween_Block_Halloween extends Mage_Core_Block_Template
     {
         return $this->_getHelper()->getPosition();
     }
-    
+
+    /**
+     * Block event type
+     *
+     * @return string
+     */
+    public function getEventType()
+    {
+        return $this->_getHelper()->getEventType();
+    }
+
     /**
      * Retrieve loaded product collection
      *
@@ -142,6 +152,16 @@ class Belvg_Halloween_Block_Halloween extends Mage_Core_Block_Template
     public function getCookieName()
     {
         return $this->_getHelper()->getCookieName();
+    }
+
+    /**
+     * Return expiry date of the cookie for hiding banner
+     *
+     * @return string
+     */
+    public function getExpires()
+    {
+        return $this->_getHelper()->getExpires();
     }
 
 }
