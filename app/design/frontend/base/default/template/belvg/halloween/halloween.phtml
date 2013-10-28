@@ -30,51 +30,54 @@
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 ?>
-
 <?php
 /* Pomotion products list */
 /* @var $this Belvg_Halloween_Block_Halloween */
 ?>
-
 <?php $_product_collection = $this->getLoadedProductCollection(); ?>
-<?php if($this->isAllowed() && $_product_collection->count() ): ?>
-<div class="belvg-promo-wrapper belvg-promo-position-<?php echo $this->getPosition()?> belvg-promo-theme-<?php echo $this->getEventType()?>">
-    <a title="Close" href="#" class="belvg-promo-close" onclick="$$('.belvg-promo-wrapper')[0].hide();document.cookie='promo-adv=1;expires=<?php echo $this->getExpires()?>;path=/';return false;"><span>Close</span></a>
-	<table class="belvg-promo-products">
-        <?php foreach( $_product_collection as $_product ): ?>
-		<tr>
-			<td>
-				<a class="product-image" title="<?php echo $this->escapeHtml($_product->getName()) ?>" href="<?php echo $_product->getProductUrl() ?>">
-					<img width="60" height="60" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(60); ?>">
-				</a>
-			</td>
-			<td>
-				<h2 class="product-name">
-					<a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a>
-				</h2>
-				<div class="price-box">
-					<span class="regular-price"><span class="price"><?php echo Mage::helper('core')->currency($_product->getFinalPrice());?></span></span>
-				</div>
-			</td>
-		</tr>
-        <?php endforeach?>
-	</table>
-</div>
-<script>
-	var belvgPromo  = $$('.belvg-promo-wrapper')[0],
-		blockHeight = belvgPromo.getDimensions().height,
-		winHeight   = document.viewport.getDimensions().height;
+<?php if( $this->isAllowed() && $_product_collection->count() ): ?>
+	<div class="belvg-promo-wrapper belvg-promo-position-<?php echo $this->getPosition()?> belvg-promo-theme-<?php echo $this->getEventType()?>">
+		<a title="Close" href="#" class="belvg-promo-close" onclick="$$('.belvg-promo-wrapper')[0].hide();document.cookie='promo-adv=1;expires=<?php echo $this->getExpires()?>;path=/';return false;"><span>Close</span></a>
+		<table class="belvg-promo-products">
+			<?php foreach( $_product_collection as $_product ): ?>
+			<tr>
+				<td>
+					<a class="product-image" title="<?php echo $this->escapeHtml($_product->getName()) ?>" href="<?php echo $_product->getProductUrl() ?>">
+						<img width="60" height="60" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(60); ?>">
+					</a>
+				</td>
+				<td>
+					<h2 class="product-name">
+						<a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a>
+					</h2>
+					<div class="price-box">
+						<span class="special-price">
+							<span class="price"><?php echo Mage::helper('core')->currency($_product->getFinalPrice()) ?></span>
+						</span>
+						<span class="old-price">
+							<span class="price"><?php echo Mage::helper('core')->currency($_product->getPrice()) ?></span>
+						</span>
+					</div>
+				</td>
+			</tr>
+			<?php endforeach; ?>
+		</table>
+	</div>
+	<script>
+		var belvgPromo  = $$('.belvg-promo-wrapper')[0],
+			blockHeight = belvgPromo.getDimensions().height,
+			winHeight   = document.viewport.getDimensions().height;
 
-	Event.observe( window, 'load', function(){
-		belvgPromo.appear({
-			duration : 4.0
+		Event.observe( window, 'load', function(){
+			belvgPromo.appear({
+				duration : 4.0
+			});
 		});
-	});
 
-	if( winHeight < blockHeight ){
-		belvgPromo.setStyle({
-			'position' : 'absolute'
-		});
-	}
-</script>
+		if( winHeight < blockHeight ){
+			belvgPromo.setStyle({
+				'position' : 'absolute'
+			});
+		}
+	</script>
 <?php endif; ?>

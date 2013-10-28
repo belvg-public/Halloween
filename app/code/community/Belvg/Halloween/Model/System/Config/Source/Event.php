@@ -45,7 +45,7 @@ class Belvg_Halloween_Model_System_Config_Source_Event
     public function toOptionArray()
     {
         return array(
-                array('value' => 'cyberday', 'label' => Mage::helper('halloween')->__('Cyber Monday')),
+                array('value' => 'cyberday', 'label' => Mage::helper('halloween')->__('Cyber Day')),
                 array('value' => 'easterday', 'label' => Mage::helper('halloween')->__('Easter')),
                 array('value' => 'halloween', 'label' => Mage::helper('halloween')->__('Halloween')),
                 array('value' => 'independenceday', 'label' => Mage::helper('halloween')->__('Independence Day')),
@@ -56,4 +56,5 @@ class Belvg_Halloween_Model_System_Config_Source_Event
                 array('value' => 'valentinesday', 'label' => Mage::helper('halloween')->__('Valentine\'s Day')),
         );
     }
+
 }
