@@ -56,5 +56,4 @@ class Belvg_Halloween_Model_System_Config_Source_Event
                 array('value' => 'valentinesday', 'label' => Mage::helper('halloween')->__('Valentine\'s Day')),
         );
     }
-
 }
